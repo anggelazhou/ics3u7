@@ -30,7 +30,6 @@ public class Ex3
         System.out.println("Welcome!");
 
         // Gather input from the user.
-        // System.out.print("\nmark? ");
 
         while (true) 
         {
