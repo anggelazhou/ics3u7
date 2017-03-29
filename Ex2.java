@@ -111,4 +111,4 @@ public class Ex2
     {
         return mark[markPosition] >= 0 && mark[markPosition] <= MAX_MARK;
     }
-} // end of public class ExercisesI2
+} // end of public class Ex2
