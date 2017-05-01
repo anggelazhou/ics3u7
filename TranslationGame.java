@@ -8,6 +8,8 @@
 import java.io.InputStreamReader;
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.FileNotFoundException;
+
 import java.util.HashMap;
 import java.util.Random;
 
@@ -16,13 +18,24 @@ public class TranslationGame
     private static BufferedReader console = 
         new BufferedReader(new InputStreamReader(System.in));
     private static Random random = new Random();
+    
+    private static final String ENGLISH_FILE = "english.txt";
+    private static final String FRENCH_FILE = "french.txt";
+    private static final String OUTPUT_FILE = "outputFile.txt";
 
     private static final String SENTINEL_VALUE = "q";
 
     private static HashMap<Integer, SentencePair> sentencePairs;
 
-    public static void main(String[] arguement) throws IOException
+    /** 
+     * The main method. 
+     * 
+     * @param argument not used
+     */
+    public static void main(String[] argument) throws IOException
     {
+        displayPreviousResultsIfThereIs();
+        
         sentencePairs = preparePairs();
         int goal = takeUserGoal();
         
@@ -64,39 +77,18 @@ public class TranslationGame
                 else
                 {
                     System.out.println("\nSorry, incorrect!");
-                }
-            }
+                } // end of if (input.equals(expectedTranslation))
+            } // end of if ("q".equalsIgnoreCase(input))
         } // end of while (sentenceCount < goal && !inputEqualsSentinelValue)
-        System.out.println("\nNumber correctly translated phrases: " + sentenceCount); 
-    }
+        System.out.println("\nNumber correctly translated phrases: " + sentenceCount + "/10"); 
+        
+        new ResultWriter(OUTPUT_FILE).write(sentenceCount);
+    } // end of public static void main(String[] arguement) throws IOException
 
-    private static HashMap<Integer, SentencePair> preparePairs()
+    private static HashMap<Integer, SentencePair> preparePairs() throws IOException
     {
-        HashMap<Integer, SentencePair> result = new HashMap<Integer, SentencePair>();
-
-        result.put(0, new SentencePair("What's your name?",
-                "Comment vous appelez-vous?"));
-        result.put(1, new SentencePair("Pleased to meet you!",
-                "Enchanté(e)!"));
-        result.put(2, new SentencePair("I'm from the U.S.A..",
-                "Je viens des États-Unis."));
-        result.put(3, new SentencePair("I live in Canada.",
-                "J'habite au Canada."));
-        result.put(4, new SentencePair("What is your profession?",
-                "Qu'est-ce que vous faites?"));
-        result.put(5, new SentencePair("What do you do in your free time?",
-                "Qu'est-ce que vous aimez faire pendant votre temps libre?"));
-        result.put(6, new SentencePair("How's the weather?",
-                "Quel temps fait-il?"));
-        result.put(7, new SentencePair("Do you have siblings?",
-                "Est-ce que vous avez des frères et sœurs?"));
-        result.put(8, new SentencePair("What's your favorite movie?",
-                "Quel est ton/votre film préféré?"));
-        result.put(9, new SentencePair("Have you visited Paris?",
-                "Est-ce que vous avez visité le Paris? "));
-
-        return result;
-    }
+        return new SentencePairReader(ENGLISH_FILE, FRENCH_FILE).read();
+    } // end of private static HashMap<Integer, SentencePair> preparePairs() throws IOException
 
     private static int takeUserGoal() throws IOException
     {
@@ -124,18 +116,18 @@ public class TranslationGame
             catch (NumberFormatException exception)
             {
                 System.out.println("Numbers only. Please re-enter.");
-            }
+            } // end of catch (NumberFormatException exception)
             System.out.println();
         }
         while (!inputValid);
 
         return input;
-    }
+    } // end of  private static int takeUserGoal() throws IOException
 
     private static int generateRandom (int upperLimit)
     {
         return random.nextInt(upperLimit); 
-    }
+    } // end of private static int generateRandom (int upperLimit)
 
     private static SentencePair takeNextUnansweredPair()
     {
@@ -147,6 +139,25 @@ public class TranslationGame
         }
         while (result.isCorrectlyAnswered());
         return result;
-    }
+    } // end of private static SentencePair takeNextUnansweredPair()
+    
+    private static void displayPreviousResultsIfThereIs() throws IOException
+    {
+        ResultReader resultReader = new ResultReader(OUTPUT_FILE);
+        
+        try 
+        {
+            resultReader.read();
+            System.out.println("*** Scores ***");
+            System.out.println("lowest score: " + resultReader.getLowestScore());
+            System.out.println("highest score: " + resultReader.getHighestScore());
+            System.out.println("last score: " + resultReader.getLatestScore());
+            System.out.println();
+        }
+        catch (FileNotFoundException exception)
+        {
+            System.out.println("No previous results.");
+        } // end of catch (FileNotFoundException exception)
+    } // end of private static void displayPreviousResultsIfThereIs() throws IOException
 
-}
+} // end of public class TranslationGame
