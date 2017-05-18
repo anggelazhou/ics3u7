@@ -13,12 +13,15 @@ import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.Random;
 
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+
 public class TranslationGame
 {
     private static BufferedReader console = 
         new BufferedReader(new InputStreamReader(System.in));
     private static Random random = new Random();
-    
+
     private static final String ENGLISH_FILE = "english.txt";
     private static final String FRENCH_FILE = "french.txt";
     private static final String OUTPUT_FILE = "outputFile.txt";
@@ -34,14 +37,16 @@ public class TranslationGame
      */
     public static void main(String[] argument) throws IOException
     {
-        displayPreviousResultsIfThereIs();
+        makeCorrectionPanel();
         
+        displayPreviousResultsIfThereIs();
+
         sentencePairs = preparePairs();
         int goal = takeUserGoal();
-        
+
         int sentenceCount = 0; 
         boolean inputEqualsSentinelValue = false;
-        
+
         System.out.println("Please translate to the other langauge. (q=quit)");
         while (sentenceCount < goal && !inputEqualsSentinelValue)
         {
@@ -81,7 +86,7 @@ public class TranslationGame
             } // end of if ("q".equalsIgnoreCase(input))
         } // end of while (sentenceCount < goal && !inputEqualsSentinelValue)
         System.out.println("\nNumber correctly translated phrases: " + sentenceCount + "/10"); 
-        
+
         new ResultWriter(OUTPUT_FILE).write(sentenceCount);
     } // end of public static void main(String[] arguement) throws IOException
 
@@ -140,11 +145,11 @@ public class TranslationGame
         while (result.isCorrectlyAnswered());
         return result;
     } // end of private static SentencePair takeNextUnansweredPair()
-    
+
     private static void displayPreviousResultsIfThereIs() throws IOException
     {
         ResultReader resultReader = new ResultReader(OUTPUT_FILE);
-        
+
         try 
         {
             resultReader.read();
@@ -160,4 +165,54 @@ public class TranslationGame
         } // end of catch (FileNotFoundException exception)
     } // end of private static void displayPreviousResultsIfThereIs() throws IOException
 
+    private static void makeCorrectionPanel() throws IOException 
+    {
+        final JPanel panel = new JPanel();
+        
+        displayPreviousResultsIfThereIs();
+
+        sentencePairs = preparePairs();
+        int goal = takeUserGoal();
+        
+        int sentenceCount = 0; 
+        boolean inputEqualsSentinelValue = false;
+
+        while (sentenceCount < goal && !inputEqualsSentinelValue)
+        {
+            SentencePair pair = takeNextUnansweredPair();
+            int chosenLanguage = generateRandom(2);
+            String presentedPhrase = null;
+            String expectedTranslation = null; 
+            if (chosenLanguage == 0)
+            {
+                presentedPhrase = pair.getEnglish();
+                expectedTranslation = pair.getFrench(); 
+            }
+            else
+            {
+                presentedPhrase = pair.getFrench();
+                expectedTranslation = pair.getEnglish(); 
+            }
+
+            System.out.print("\n" + presentedPhrase + " ");
+            String input = console.readLine();
+            if ("q".equalsIgnoreCase(input))
+            {
+                inputEqualsSentinelValue = true;
+                JOptionPane.showMessageDialog(panel, "User requested quit.");
+            }
+            else 
+            {
+                if (input.equals(expectedTranslation))
+                {
+                    JOptionPane.showMessageDialog(panel, "Correct!");
+                } 
+                else
+                {
+                    JOptionPane.showMessageDialog(panel, "Sorry, incorrect!");
+                } // end of if (input.equals(expectedTranslation)
+            } // end of if ("q".equalsIgnoreCase(input))
+        } // end of while (sentenceCount < goal && !inputEqualsSentinelValue)
+
+    }
 } // end of public class TranslationGame
