@@ -16,7 +16,7 @@ public class TranslationGameGUI
     /**
      * Create the GUI and show it.
      */
-    private static void createAndShowGUI() 
+    private static void makeInitialFrame() 
     {
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         double screenWidth = screenSize.getWidth();
@@ -36,20 +36,16 @@ public class TranslationGameGUI
         
 		frame.getContentPane().setLayout(new BorderLayout(10, 10));
         
-        JPanel instructionPanel = makeInstructionPanel();
+        JPanel instructionPanel = makeInstructionPanel(frame.getContentPane());
         frame.getContentPane().add(instructionPanel, BorderLayout.CENTER);
         
-        
-        JButton button = new JButton("Next");
-        button.addActionListener(new InstructionOkListener(frame.getContentPane(), instructionPanel));
-        frame.getContentPane().add(button, BorderLayout.PAGE_END);
 
         //Display the window.
         
         frame.setVisible(true);
     }
 
-	private static JPanel makeInstructionPanel() {
+	private static JPanel makeInstructionPanel(Container container) {
 		JPanel instructionPanel = new JPanel();
         instructionPanel.setLayout(new BorderLayout(10, 10));
         //panel.setBackground(Color.red);
@@ -64,10 +60,15 @@ public class TranslationGameGUI
         Border border = BorderFactory.createLineBorder(Color.BLUE, 5);
         label.setBorder(border);
         instructionPanel.add(label, BorderLayout.CENTER);
+        
+        JButton button = new JButton("Next");
+        button.addActionListener(new InstructionOkListener(container, instructionPanel));
+        instructionPanel.add(button, BorderLayout.PAGE_END);
+        
 		return instructionPanel;
 	}
     
-	private static JPanel makeGoalPanel() {
+	private static JPanel makeGoalPanel(Container container) {
 		JPanel goalPanel = new JPanel();
         goalPanel.setLayout(new BorderLayout(10, 10));
         //panel.setBackground(Color.red);
@@ -101,7 +102,7 @@ public class TranslationGameGUI
 			container.remove(instructionPanel);
 			
 			// build goal panel
-		    JPanel goalPanel = makeGoalPanel();
+		    JPanel goalPanel = makeGoalPanel(this.container);
 		    container.add(goalPanel, BorderLayout.CENTER);
 		      
 			container.revalidate();
@@ -118,7 +119,7 @@ public class TranslationGameGUI
         {
                 public void run() 
                 {
-                    createAndShowGUI();
+                    makeInitialFrame();
                 }
         });
     }
