@@ -1,4 +1,3 @@
-
 // import necessary classes
 import java.awt.BorderLayout;
 import java.awt.Container;
@@ -19,7 +18,7 @@ import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;        
 
 /**
- * An English/French translation game.
+ * A French/English translation game.
  * 
  * @author Angela Zhou 
  * @version 1
@@ -27,14 +26,25 @@ import javax.swing.border.EmptyBorder;
 
 public class TranslationGameGUI 
 {   
+    // static fields
     private static int frameWidth = 400;
     private static int frameHeight = 250;
     private static int horizontalGap = 10;
     private static int verticalGap = 10; 
     private static int buttonHeight = 30;
-    
+    private static String FRAME_TITLE = "Translation Game";
+    private static String NEXT_BUTTON_TEXT = "Next";
+    private static String INSTRUCTION_PANEL_LABEL_TEXT = "<html><body>"
+            + "<p><center>Welcome to the French/English translation game!</center></p>"
+            + "<p><center>In this game, you must translate a number of French words"
+            + " to English and vice versa.</center></p>"
+            + "</body></html>";
+    private static int verticalGap = 10;
+    private static int horizontalGap = 10;
+
+
     /**
-     * Create the initial frame.
+     * Creates the initial frame.
      */
     private static void makeInitialFrame() 
     {
@@ -42,13 +52,12 @@ public class TranslationGameGUI
         double screenWidth = screenSize.getWidth();
         double screenHeight = screenSize.getHeight();
 
-
-        // Create x and y to center frame
+        // Create an appropiate x and y to center frame on screen.
         int x = new Double((screenWidth - frameWidth) / 2).intValue();
         int y = new Double((screenHeight - frameHeight) / 2).intValue();
 
         //Create and set up the frame.
-        JFrame frame = new JFrame("Translation Game");
+        JFrame frame = new JFrame(FRAME_TITLE);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setBounds(x, y, frameWidth, frameHeight); 
         //frame.setSize(panelWidth, panelHeight);
@@ -61,112 +70,106 @@ public class TranslationGameGUI
         //Display the window.
         frame.setVisible(true);
         //frame.pack();
-    }
+    } // end of method private static void makeInitialFrame() 
 
     /**
-     * Calculate 
+     * Calculates appropriate width of the label panel.
      */
     private static int calculateLabelPanelWidth()
     {
-    	return frameWidth - (horizontalGap * 2);
-    }
-    
+        return frameWidth - (horizontalGap * 2);
+    } // end of method private static int calculateLabelPanelWidth()
+
     /**
-     * Calculate 
+     * Calculates appropriate height of the label panel.
      */
     private static int calculateLabelPanelHeight()
     {
-    	return frameHeight - (verticalGap * 2) - buttonHeight - (verticalGap * 5);
-    }
-    
-     /**
-     * Create the instruction panel.
+        return frameHeight - (verticalGap * 2) - buttonHeight - (verticalGap * 5);
+    } // end of method private static int calculateLabelPanelHeight()
+
+    /**
+     * Creates the instruction panel.
      */
     private static JPanel makeInstructionPanel(Container container) 
     {
         JPanel instructionPanel = new JPanel();
         instructionPanel.setLayout(new BorderLayout(10, 10));
-        //panel.setBackground(Color.red);
-        
+
         JPanel labelPanel = new JPanel();
         labelPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
         instructionPanel.add(labelPanel, BorderLayout.CENTER);
-     
 
         //Add the intructions.
         JLabel label = new JLabel();
-        label.setPreferredSize(new Dimension(calculateLabelPanelWidth(), calculateLabelPanelHeight()));
-        label.setText("<html><body>"
-            + "<p><center>Welcome to the French/English translation game!</center></p>"
-            + "<p><center>In this game, you must translate a number of French"
-            + " words to English and vice versa.</center></p>"
-            + "</body></html>");
+        label.setPreferredSize(new Dimension(calculateLabelPanelWidth(), 
+            calculateLabelPanelHeight()));
+        label.setText(INSTRUCTION_PANEL_LABEL_TEXT);
         labelPanel.add(label);
-//        Border border = BorderFactory.createLineBorder(Color.BLUE, 5);
-//        label.setBorder(border);
+        //        Border border = BorderFactory.createLineBorder(Color.BLUE, 5);
+        //        label.setBorder(border);
 
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
         instructionPanel.add(buttonPanel, BorderLayout.PAGE_END);
-        
-        JButton button = new JButton("Next");
+
+        JButton button = new JButton(NEXT_BUTTON_TEXT);
         button.setPreferredSize(new Dimension(calculateLabelPanelWidth()/2, buttonHeight));
-        button.addActionListener(new InstructionNextListener(container, instructionPanel));
+        button.addActionListener(new InstructionNextButtonListener(container, instructionPanel));
         buttonPanel.add(button);
 
         return instructionPanel;
-    }
+    } // end of method private static JPanel makeInstructionPanel(Container container)
 
-     /**
-     * Create goal panel.
+    /**
+     * Creates the goal panel.
      */
     private static JPanel makeGoalPanel(Container container) 
     {
-    	GridLayout grid = new GridLayout(3, 1, 10, 10);
-    	
-    	JPanel goalPanel = new JPanel();
-       	goalPanel.setLayout(grid);
-       	
-       	Border paddingBorder = new EmptyBorder(30, 10, 5, 10);
-       	goalPanel.setBorder(paddingBorder);
-       	
+        GridLayout grid = new GridLayout(3, 1, 10, 10);
+
+        JPanel goalPanel = new JPanel();
+        goalPanel.setLayout(grid);
+
+        Border paddingBorder = new EmptyBorder(30, 10, 5, 10);
+        goalPanel.setBorder(paddingBorder);
+
         JPanel labelPanel = new JPanel();
         labelPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
         goalPanel.add(labelPanel);
-        
+
         JLabel label = new JLabel();
         label.setText("Enter a goal between 1 - 10:");
         labelPanel.add(label);
-        
+
         JPanel textPanel = new JPanel();
         textPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
         goalPanel.add(textPanel);
-        
+
         JTextField goal = new JTextField(20);
         textPanel.add(goal);
-        
+
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
         goalPanel.add(buttonPanel);
-        
-        JButton button = new JButton("Next");
+
+        JButton button = new JButton(NEXT_BUTTON_TEXT);
         button.setPreferredSize(new Dimension(calculateLabelPanelWidth()/2, buttonHeight));
-        button.addActionListener(new GoalNextListener(container, goalPanel, goal));
+        button.addActionListener(new GoalNextButtonListener(container, goalPanel, goal));
         buttonPanel.add(button);
-        
-//      goal.addInputMethodListener(l);
+
+        //      goal.addInputMethodListener(l);
 
         return goalPanel;
-    }
+    } // end of method private static JPanel makeGoalPanel(Container container)
 
-
-     /**
-     * Create the game panel.
+    /**
+     * Creates the game panel.
      */
     private static JPanel makeGamePanel(Container container) 
     {
-    	
-    	JPanel gamePanel = new JPanel();
+
+        JPanel gamePanel = new JPanel();
         gamePanel.setLayout(new BorderLayout(10, 10));
 
         //Add the intructions.
@@ -179,19 +182,23 @@ public class TranslationGameGUI
         //Border border = BorderFactory.createLineBorder(Color.BLUE, 5);
         //label.setBorder(border);
         gamePanel.add(label, BorderLayout.CENTER);
-        
+
         JButton button = new JButton("Submit");
         gamePanel.add(button, BorderLayout.PAGE_END);
 
         return gamePanel;
-    }
+    } // end of method private static JPanel makeGamePanel(Container container)
 
-    private static class InstructionNextListener implements ActionListener
+    /*
+     * A listener which can be registered by an event source and which
+     * can receive event objects.
+     */
+    private static class InstructionNextButtonListener implements ActionListener
     {
         private Container container; 
         private JPanel instructionPanel;
 
-        public InstructionNextListener(Container container, JPanel instructionPanel) 
+        public InstructionNextButtonListener(Container container, JPanel instructionPanel) 
         {
             this.container = container;
             this.instructionPanel = instructionPanel;
@@ -201,7 +208,7 @@ public class TranslationGameGUI
         {
             container.remove(instructionPanel);
 
-            // build goal panel
+            // build the goal panel
             JPanel goalPanel = makeGoalPanel(this.container);
             container.add(goalPanel, BorderLayout.CENTER);
 
@@ -209,15 +216,19 @@ public class TranslationGameGUI
             container.repaint();
         }
 
-    }
+    } // end of class private static class InstructionNextButtonListener implements ActionListener
 
-    private static class GoalNextListener implements ActionListener
+     /*
+     * A listener which can be registered by an event source and which
+     * can receive event objects.
+     */
+    private static class GoalNextButtonListener implements ActionListener
     {
         private Container container; 
         private JPanel goalPanel;
         private JTextField goal; 
 
-        public GoalNextListener(Container container, JPanel goalPanel, JTextField goal) 
+        public GoalNextButtonListener(Container container, JPanel goalPanel, JTextField goal) 
         {
             this.container = container;
             this.goalPanel = goalPanel;
@@ -228,55 +239,54 @@ public class TranslationGameGUI
         {
             if (isInputValid()) 
             {
-        	
-        	container.remove(goalPanel);
 
-            // build game panel
-            JPanel gamePanel = makeGamePanel(this.container);
-            container.add(gamePanel, BorderLayout.CENTER);
+                container.remove(goalPanel);
 
-            container.revalidate();
-            container.repaint();
+                // build the game panel
+                JPanel gamePanel = makeGamePanel(this.container);
+                container.add(gamePanel, BorderLayout.CENTER);
+
+                container.revalidate();
+                container.repaint();
             }
             else 
             {
-            	JOptionPane.showMessageDialog(container.getParent(), "Invalid input. Please enter a number between 1 - 10.");
-            	
+                JOptionPane.showMessageDialog(container.getParent(), 
+                    "Invalid input. Please enter a number between 1 - 10.");
             }
         }
 
         private boolean isInputValid()
         {
-        	String input = goal.getText();
-        	if (input == null || input.length() == 0)
-        	{
-        		return false;
-        	}
-        	else 
-        	{
-        		input = input.trim();
-        		try
-        		{
-        			int value = Integer.parseInt(input);
-        			if ( value >= 1 && value <= 10 ) 
-        			{
-        				return true;
-        			} 
-        			else
-        			{
-        				return false;
-        			}
-        		}
-        		catch (Exception exception)
-        		{
-        			return false;
-        		}
-        	}
-        	
+            String input = goal.getText();
+            if (input == null || input.length() == 0)
+            {
+                return false;
+            }
+            else 
+            {
+                input = input.trim();
+                try
+                {
+                    int value = Integer.parseInt(input);
+                    if ( value >= 1 && value <= 10 ) 
+                    {
+                        return true;
+                    } 
+                    else
+                    {
+                        return false;
+                    }
+                }
+                catch (Exception exception)
+                {
+                    return false;
+                }
+            }
+
         }
-        
-    }
-    
+
+    } // end of class  private static class GoalNextButtonListener implements ActionListener
 
     public static void main(String[] args) 
     {
