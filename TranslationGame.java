@@ -646,4 +646,4 @@ public class TranslationGame
 		}
 	} // end of class private static class QuitButtonListener implements
 		// ActionListener
-}
+} // end of public class TranslationGame

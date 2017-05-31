@@ -158,4 +158,5 @@ public class WordPairAndImage
 		this.correctlyAnswered = correctAnswered;
 	} // end of public void setCorrectlyAnswered(boolean correct)
 
-} // end of public class SentencePair
+} // end of public class WordPairAndImage
+
