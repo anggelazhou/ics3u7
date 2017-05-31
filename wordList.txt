@@ -1,0 +1,23 @@
+word1.english = cookie
+word2.english = chocolate
+word3.english = bread
+word4.english = apple
+word5.english = pineapple
+
+word1.french = biscuit
+word2.french = chocolat
+word3.french = pain
+word4.french = pomme
+word5.french = ananas
+
+word1.image = cookie.jpg
+word2.image = chocolate.jpg
+word3.image = bread.jpg
+word4.image = apple.jpg
+word5.image = pineapple.jpg
+
+word1.imageURL = http://www.readersdigest.ca/wp-content/uploads/2016/05/sugar-cookie.jpg
+word2.imageURL = http://www.thorntons.co.uk/chocolate-boxes/nut-and-praline-collection-chocolate-box-264g-63922.html
+word3.imageURL = http://images.media-allrecipes.com/userphotos/960x960/3756420.jpg
+word4.imageURL = http://sites.psu.edu/siowfa15/wp-content/uploads/sites/29639/2015/09/04_Apples.jpg
+word5.imageURL = http://freenology.com/images/71442946288pineapple.jpg
