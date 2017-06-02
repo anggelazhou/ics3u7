@@ -164,13 +164,20 @@ public class TranslationGame
         buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER, horizontalGap, verticalGap));
         instructionPanel.add(buttonPanel, BorderLayout.PAGE_END);
 
-        JButton nextButton = new JButton(NEXT_BUTTON_TEXT);
-        nextButton.setPreferredSize(new Dimension(calculateLabelPanelWidth() / 2, buttonHeight));
-        nextButton.addActionListener(new EnterGoalPanelListener(container, instructionPanel));
+        JButton nextButton = createInstructionNextButton(container, instructionPanel);
         buttonPanel.add(nextButton);
 
         return instructionPanel;
     } // end of method private static JPanel makeInstructionPanel(Container container)
+    
+    private static JButton createInstructionNextButton(Container container, JPanel instructionPanel)
+    {
+        JButton nextButton = new JButton(NEXT_BUTTON_TEXT);
+        nextButton.setPreferredSize(new Dimension(calculateLabelPanelWidth() / 2, buttonHeight));
+        nextButton.addActionListener(new GoalNextButtonListener(container, instrucionPanel));
+        
+        return nextButton;
+    } 
 
     /**
      * Creates the goal panel with next button leading to game panel.
@@ -215,18 +222,24 @@ public class TranslationGame
         buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
         goalPanel.add(buttonPanel);
 
-        JButton quitButton = new JButton(QUIT_BUTTON_TEXT);
+        JButton quitButton = createQuitButton();
         quitButton.setPreferredSize(new Dimension(calculateLabelPanelWidth() / 3, buttonHeight));
-        quitButton.addActionListener(new QuitButtonListener());
         buttonPanel.add(quitButton);
 
-        JButton nextButton = new JButton(NEXT_BUTTON_TEXT);
-        nextButton.setPreferredSize(new Dimension(calculateLabelPanelWidth() / 3, buttonHeight));
-        nextButton.addActionListener(new GoalNextButtonListener(container, goalPanel, goal));
+        JButton nextButton = createGoalNextButton(container, goalPanel, goal);
         buttonPanel.add(nextButton);
 
         return goalPanel;
     } // end of method private static JPanel makeGoalPanel(Container container)
+    
+    private static JButton createGoalNextButton(Container container, JPanel goalPanel, JTextField goal)
+    {
+        JButton nextButton = new JButton(NEXT_BUTTON_TEXT);
+        nextButton.setPreferredSize(new Dimension(calculateLabelPanelWidth() / 3, buttonHeight));
+        nextButton.addActionListener(new GoalNextButtonListener(container, goalPanel, goal));
+        
+        return nextButton;
+    } // end of method private static JButton createNextButton(Container container, JPanel goalPanel, JTextField goal)
 
     /**
      * Creates the game panel with a submit button leading to score panel if
@@ -256,8 +269,7 @@ public class TranslationGame
         gamePanel.add(wordPairAndImagePanel, BorderLayout.CENTER);
 
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        JButton quitButton = new JButton(QUIT_BUTTON_TEXT);
-        quitButton.addActionListener(new QuitButtonListener());
+        JButton quitButton = createQuitButton();
         buttonPanel.add(quitButton);
 
         JButton submitButton = new JButton(SUBMIT_BUTTON_TEXT);
@@ -279,10 +291,12 @@ public class TranslationGame
      */
     private static JPanel makeScorePanel(Container container, int goal, int score, int incorrectAnswerCount)
     {
+        // create grid layout for the score panel
         int gridRows = 4;
         int gridColumns = 1;
         GridLayout grid = new GridLayout(gridRows, gridColumns, horizontalGap, verticalGap);
 
+        // create score panel
         JPanel scorePanel = new JPanel();
         scorePanel.setLayout(grid);
 
@@ -294,17 +308,21 @@ public class TranslationGame
         Border paddingBorder = new EmptyBorder(topMargin, leftMargin, bottomMargin, rightMargin);
         scorePanel.setBorder(paddingBorder);
 
+        // create label panel
         JPanel labelPanel = new JPanel();
         labelPanel.setLayout(new FlowLayout(FlowLayout.CENTER, horizontalGap, verticalGap));
         scorePanel.add(labelPanel);
 
-        JLabel thanksLabel = new JLabel();
-        thanksLabel.setText("Thank you for playing!");
-        labelPanel.add(thanksLabel);
+        // create thank you label and add to the thank you label panel
+        JLabel thankyouLabel = new JLabel();
+        thankyouLabel.setText("Thank you for playing!");
+        labelPanel.add(thankyouLabel);
 
+        // create goal panel and add to score panel
         JPanel goalPanel = new JPanel();
         goalPanel.setLayout(new FlowLayout(FlowLayout.CENTER, horizontalGap, verticalGap));
         scorePanel.add(goalPanel);
+        // create goal label and add to goal panel. 
         JLabel goalLabel = new JLabel();
         goalLabel.setText("You reached your goal of " + goal + " word(s).");
         goalPanel.add(goalLabel);
@@ -320,9 +338,8 @@ public class TranslationGame
         buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER, horizontalGap, verticalGap));
         scorePanel.add(buttonPanel);
 
-        JButton quitButton = new JButton(QUIT_BUTTON_TEXT);
+        JButton quitButton = createQuitButton();
         quitButton.setPreferredSize(new Dimension(calculateLabelPanelWidth() / 3, buttonHeight));
-        quitButton.addActionListener(new QuitButtonListener());
         buttonPanel.add(quitButton);
 
         JButton replayButton = new JButton(REPLAY_BUTTON_TEXT);
@@ -333,7 +350,15 @@ public class TranslationGame
         
         return scorePanel;
     } // end of method private static JPanel makeScorePanel(Container container, int goal, int score, int incorrectAnswerCount)
-
+    
+    private static JButton createQuitButton()
+    {
+        JButton quitButton = new JButton(QUIT_BUTTON_TEXT);
+        quitButton.addActionListener(new QuitButtonListener());
+        
+        return quitButton; 
+    }
+    
     /* private classes */
 
     /*

@@ -1,7 +1,7 @@
 import java.util.Random;
 
 /**
- * Creates a word pair in French/English.
+ * Creates a word pair in French/English with an image and its URL.
  * 
  * @author Angela Zhou
  * @version 1
@@ -90,8 +90,7 @@ public class WordPairAndImage
 		this.imagePath = imagePath;
 		this.imageURL = imageURL;
 		this.correctlyAnswered = false;
-	} // end of method public WordPairAndImage(String french, String english,
-		// String imagePath)
+	} // end of method public WordPairAndImage(String french, String english,String imagePath)
 
 	/* accessors */
 
@@ -157,6 +156,5 @@ public class WordPairAndImage
 	{
 		this.correctlyAnswered = correctAnswered;
 	} // end of public void setCorrectlyAnswered(boolean correct)
-
 } // end of public class WordPairAndImage
 
