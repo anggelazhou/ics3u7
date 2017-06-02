@@ -1,7 +1,7 @@
 import java.util.Random;
 
 /**
- * Creates a word pair in French/English with an image and its URL.
+ * Creates a word pair in French/English.
  * 
  * @author Angela Zhou
  * @version 1
@@ -83,14 +83,16 @@ public class WordPairAndImage
 	/**
 	 * Constructs a word pair and image with all specified characteristics.
 	 */
-	public WordPairAndImage(String english, String french, String imagePath, String imageURL)
+	public WordPairAndImage(String english, String french, String imagePath, 
+			String imageURL)
 	{
 		this.english = english;
 		this.french = french;
 		this.imagePath = imagePath;
 		this.imageURL = imageURL;
 		this.correctlyAnswered = false;
-	} // end of method public WordPairAndImage(String french, String english,String imagePath)
+	} // end of method public WordPairAndImage(String french, String english,
+		// String imagePath)
 
 	/* accessors */
 
@@ -149,12 +151,13 @@ public class WordPairAndImage
 	 * Sets flag indicating whether or not this word pair has been correctly
 	 * translated.
 	 * 
-	 * @param correct
-	 *            boolean true if this word pair has been correctly translated
+	 * @param correct boolean true if this word pair has been correctly 
+	 * translated
 	 */
 	public void setCorrectlyAnswered(boolean correctAnswered)
 	{
 		this.correctlyAnswered = correctAnswered;
 	} // end of public void setCorrectlyAnswered(boolean correct)
+
 } // end of public class WordPairAndImage
 
