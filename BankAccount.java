@@ -71,20 +71,6 @@ public class BankAccount
     } // end of method  public double getBalance()
     
     /**
-     * Sets the balance of this account.
-     * <br><i>precondition:</i> must be non-negative
-     * 
-     * @param balance the new non-negative balance
-     */
-    public void setBalance(double newBalance)
-    {
-        if (newBalance >= 0) 
-        {
-            balance = newBalance;
-        } // end of if (newBalance >= 0) 
-    } // end of method  public double getBalance(double newBalance)
-    
-    /**
      * Returns a string representation of this account.
      *
      * @override toString in class Object

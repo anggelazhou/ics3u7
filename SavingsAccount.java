@@ -1,4 +1,3 @@
-
 /**
  * A savings account earns a fixed rate of interest.
  * 
@@ -18,11 +17,11 @@ public class SavingsAccount extends BankAccount
      */
     public SavingsAccount(double rate) 
     {
+        super();
         if (rate >= 0)
         {
             this.rate = rate;
         } // end of if (rate >= 0)
-        setBalance(0);
     } // end of constructor public SavingsAccount(double rate) 
     
     /**
@@ -30,11 +29,11 @@ public class SavingsAccount extends BankAccount
      */
     public SavingsAccount(double initialBalance, double rate) 
     {
+        super(initialBalance); 
         if (rate >= 0)
         {
             this.rate = rate;
         }
-        setBalance(initialBalance);
     } // end of constructor public SavingsAccount(double initialBalance, double rate) 
    
     // methods
@@ -44,7 +43,7 @@ public class SavingsAccount extends BankAccount
      */
     public void addInterest()
     {
-        balance = balance + (balance * rate);
+        deposit(getBalance() * (rate / 100));
     } // end of method public void addInterest()
     
     /**
@@ -68,7 +67,7 @@ public class SavingsAccount extends BankAccount
         if (rate >= 0)
         {
             this.rate = rate;
-        }
+        } // end of if (rate >= 0)
     } // end of method   public void setRate(double rate)
     
     /**
@@ -81,8 +80,6 @@ public class SavingsAccount extends BankAccount
     {
         return getClass().getName()
         + " ["
-        + "balance: " + balance
-        + ", account number: " + accountNumber
         + ", rate: " + rate
         + "]";
     } // end of method public String toString()
