@@ -34,28 +34,31 @@ public class TimeDepositAccount extends SavingsAccount
         try
         {
             String[] stringDate = termExpiration.split("-");
-            String[] strinMinDate = MINIMUM_DATE.split("-");
-            for (int i = 1; i < stringDate.length; i++)
+            String[] stringMinDate = MINIMUM_DATE.split("-");
+            
+            int[] date = new int[3];
+            int[] minDate = new int[3];
+            
+            for (int i = 0; i < stringDate.length; i++)
             {
-                int[] date = new int[3];
-                int[] minDate = new int[3];
-
-                date[i] = Integer.parseInt(date[i]); 
-                minDate[i] = Integer.parseInt(minDate[i]); 
+                date[i] = Integer.parseInt(stringDate[i]); 
+                minDate[i] = Integer.parseInt(stringMinDate[i]); 
             } // end of for (int i = 0; i < date.length; i++)
             
             int inputYear = date[0];
             int minYear = minDate[0];
             
+            int inputMonth = 0; 
             if (date[1] >= 1 && date[1] <= 12)
             {
-                 int inputMonth = date[1];
+                  inputMonth = date[1];
             } // end of if (date[1] >= 1 && date[1] <= 12)
             int minMonth = minDate[1];
             
+            int inputDay = 0; 
             if (date[2] >= 1 && date[2] <= 31)
             {
-                 int inputDay = date[2];
+                 inputDay = date[2];
             } // end of if (date[2] >= 1 && date[2] <= 31)
             int minDay = minDate[2];
             
@@ -63,13 +66,13 @@ public class TimeDepositAccount extends SavingsAccount
             {
                 this.termExpiration = termExpiration;
             } 
-            else if (inputYear = minYear)
+            else if (inputYear == minYear)
             {
                 if (inputMonth > minMonth)
                 {
                     this.termExpiration = termExpiration;
                 }
-                else if (inputMonth = minMonth)
+                else if (inputMonth == minMonth)
                 {
                     if (inputDay > minDay)
                     {
@@ -96,7 +99,60 @@ public class TimeDepositAccount extends SavingsAccount
     TimeDepositAccount(double rate, String termExpiration) 
     {
         super(rate); 
-        this.termExpiration = termExpiration; 
+        try
+        {
+            String[] stringDate = termExpiration.split("-");
+            String[] stringMinDate = MINIMUM_DATE.split("-");
+            
+            int[] date = new int[3];
+            int[] minDate = new int[3];
+            
+            for (int i = 0; i < stringDate.length; i++)
+            {
+                date[i] = Integer.parseInt(stringDate[i]); 
+                minDate[i] = Integer.parseInt(stringMinDate[i]); 
+            } // end of for (int i = 0; i < date.length; i++)
+            
+            int inputYear = date[0];
+            int minYear = minDate[0];
+            
+            int inputMonth = 0; 
+            if (date[1] >= 1 && date[1] <= 12)
+            {
+                  inputMonth = date[1];
+            } // end of if (date[1] >= 1 && date[1] <= 12)
+            int minMonth = minDate[1];
+            
+            int inputDay = 0; 
+            if (date[2] >= 1 && date[2] <= 31)
+            {
+                 inputDay = date[2];
+            } // end of if (date[2] >= 1 && date[2] <= 31)
+            int minDay = minDate[2];
+            
+            if (inputYear > minYear)
+            {
+                this.termExpiration = termExpiration;
+            } 
+            else if (inputYear == minYear)
+            {
+                if (inputMonth > minMonth)
+                {
+                    this.termExpiration = termExpiration;
+                }
+                else if (inputMonth == minMonth)
+                {
+                    if (inputDay > minDay)
+                    {
+                        this.termExpiration = termExpiration;
+                    } // end of if (inputDay > minDay)
+                } // end of if (inputMonth > minMonth)
+            } // end of if (inputYear = minYear)
+        }
+        catch (NumberFormatException exception)
+        {
+            System.out.println("Please enter a valid date.");
+        }
     } // end of constructor TimeDepositAccount(double rate, String termExpiration) 
    
     // methods
@@ -119,7 +175,60 @@ public class TimeDepositAccount extends SavingsAccount
      */
     public void setTerm(String termExpiration)
     {
-        return rate;
+       try
+        {
+            String[] stringDate = termExpiration.split("-");
+            String[] stringMinDate = MINIMUM_DATE.split("-");
+            
+            int[] date = new int[3];
+            int[] minDate = new int[3];
+            
+            for (int i = 0; i < stringDate.length; i++)
+            {
+                date[i] = Integer.parseInt(stringDate[i]); 
+                minDate[i] = Integer.parseInt(stringMinDate[i]); 
+            } // end of for (int i = 0; i < date.length; i++)
+            
+            int inputYear = date[0];
+            int minYear = minDate[0];
+            
+            int inputMonth = 0; 
+            if (date[1] >= 1 && date[1] <= 12)
+            {
+                  inputMonth = date[1];
+            } // end of if (date[1] >= 1 && date[1] <= 12)
+            int minMonth = minDate[1];
+            
+            int inputDay = 0; 
+            if (date[2] >= 1 && date[2] <= 31)
+            {
+                 inputDay = date[2];
+            } // end of if (date[2] >= 1 && date[2] <= 31)
+            int minDay = minDate[2];
+            
+            if (inputYear > minYear)
+            {
+                this.termExpiration = termExpiration;
+            } 
+            else if (inputYear == minYear)
+            {
+                if (inputMonth > minMonth)
+                {
+                    this.termExpiration = termExpiration;
+                }
+                else if (inputMonth == minMonth)
+                {
+                    if (inputDay > minDay)
+                    {
+                        this.termExpiration = termExpiration;
+                    } // end of if (inputDay > minDay)
+                } // end of if (inputMonth > minMonth)
+            } // end of if (inputYear = minYear)
+        }
+        catch (NumberFormatException exception)
+        {
+            System.out.println("Please enter a valid date.");
+        }
     } // end of method public void setTerm(String termExpiration)
     
     /**
